@@ -1,0 +1,10 @@
+# Environment variables
+.env
+
+# Secret Data
+*.csv
+*.db
+
+# Go data
+go.mod
+go.sum
