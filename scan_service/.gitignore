@@ -4,6 +4,7 @@
 # Secret Data
 *.csv
 *.db
+*.json
 
 # Go data
 go.mod
