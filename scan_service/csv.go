@@ -48,8 +48,8 @@ func GetMembers() []*Member {
 func timeConversion(expirationStr string, member *Member) {
 	var err error
 	dateList := strings.Split(expirationStr, "/")
-	month := dateList[0]
-	day := dateList[1]
+	month := fmt.Sprintf("%02s", dateList[0])
+	day := fmt.Sprintf("%02s", dateList[1])
 	year := dateList[2]
 
 	formattedDate := fmt.Sprintf("%s-%s-%s", year, month, day)

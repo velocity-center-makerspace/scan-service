@@ -3,16 +3,35 @@ package main
 import (
 	"context"
 	sc "door-greeter/scan_service"
+	"log"
+	"net/http"
+	"os"
+
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/gmail/v1"
 	"google.golang.org/api/option"
-	"log"
-	"os"
 )
 
 func main() {
 	sc.DatabaseInit()
 	members := sc.GetMembers()
+
+	for _, member := range members {
+		log.Println(member.FirstName, member.MembershipExpiration)
+	}
+
+	fileHandler := http.StripPrefix("/static/", http.FileServer(http.Dir("../static/")))
+	http.Handle("/static/", fileHandler)
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "../templates/index.html")
+	})
+
+	http.HandleFunc("/see-coordinator", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "../templates/see-coordinator.html")
+	})
+
+	log.Fatal(http.ListenAndServe(":8080", nil))
 
 	ctx := context.Background()
 	b, err := os.ReadFile("../credentials.json")

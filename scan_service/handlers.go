@@ -12,17 +12,15 @@ func HomePageHandler(w http.ResponseWriter, r *http.Request) {
 	member_id, err := strconv.Atoi(r.FormValue("member-id"))
 	if err != nil {
 		log.Print("Member ID is not a string")
-		// TODO: change to HX-Refresh
-		return
+		w.Header().Set("HX-Refresh", "true")
 	}
 	// check csv file for membership
 	members := GetMembers()
 	for i := range len(members) {
 		if members[i].MemberID == member_id {
-		// check member expiration
-		if 
-		// add visiting member data to db
-		// send email to MAKERSPACE_EMAIL and MY_EMAIL
+			// check member expiration
+			// add visiting member data to db
+			// send email to MAKERSPACE_EMAIL and MY_EMAIL
 		}
 	}
 }

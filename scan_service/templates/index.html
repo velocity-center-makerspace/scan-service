@@ -8,13 +8,29 @@
   </head>
   <body>
     <h1>Makerspace Membership Check In</h1>
-    <img
-      id="screen-img"
-      src="../static/assets/vc-dark-bg.png"
-      alt="Velocity Center Logo"
-      width="300"
-    />
-    <h3>Scan your Member ID card to check in</h3>
-    <input type="text" name="member-id" id="member-id" maxlength="6" />
+    <div id="main-partial">
+      <img
+        src="../static/assets/vc-dark-bg.png"
+        alt="Velocity Center Logo"
+        width="300"
+      />
+      <h3>Scan your Member ID card to check in</h3>
+      <input
+        type="text"
+        autofocus
+        name="member-id"
+        id="member-id"
+        maxlength="6"
+      />
+      <br />
+      <a
+        href="/see-coordinator"
+        hx-boost="true"
+        hx-target="#main-partial"
+        hx-swap="outerHTML"
+      >
+        I don't have a Member ID card/I'm not a member
+      </a>
+    </div>
   </body>
 </html>
