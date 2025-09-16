@@ -1,10 +1,13 @@
 package scanservice
 
 import (
-	"github.com/gocarina/gocsv"
+	"fmt"
 	"log"
 	"os"
+	"strings"
 	"time"
+
+	"github.com/gocarina/gocsv"
 )
 
 type Member struct {
@@ -35,5 +38,23 @@ func GetMembers() []*Member {
 		log.Fatal(err)
 	}
 
+	for _, member := range members {
+		timeConversion(member.MembershipExpirationStr, member)
+	}
+
 	return members
+}
+
+func timeConversion(expirationStr string, member *Member) {
+	var err error
+	dateList := strings.Split(expirationStr, "/")
+	month := dateList[0]
+	day := dateList[1]
+	year := dateList[2]
+
+	formattedDate := fmt.Sprintf("%s-%s-%s", year, month, day)
+	member.MembershipExpiration, err = time.Parse(time.DateOnly, formattedDate)
+	if err != nil {
+		log.Fatalf("Error parsing member expiration: %v", err)
+	}
 }

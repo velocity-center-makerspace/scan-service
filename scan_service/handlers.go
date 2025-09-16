@@ -4,7 +4,6 @@ import (
 	"net/http"
 	// "os"
 	"log"
-	"slices"
 	"strconv"
 )
 
@@ -18,14 +17,12 @@ func HomePageHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	// check csv file for membership
 	members := GetMembers()
-	var member_ids []int
-	for _, member := range members {
-		member_ids = append(member_ids, member.MemberID)
-	}
-
-	if slices.Contains(member_ids, member_id) {
+	for i := range len(members) {
+		if members[i].MemberID == member_id {
 		// check member expiration
+		if 
 		// add visiting member data to db
 		// send email to MAKERSPACE_EMAIL and MY_EMAIL
+		}
 	}
 }
