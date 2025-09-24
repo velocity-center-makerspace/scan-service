@@ -14,12 +14,8 @@
   <body>
     <div id="main-partial">
       <h1>Makerspace Member Check In</h1>
-      <img
-        src="static/assets/vc-dark-bg.png"
-        alt="Velocity Center Logo"
-        width="600"
-      />
-      <h3>Scan your Member ID card to check in</h3>
+      <img src="static/assets/vc-dark-bg.png" alt="Velocity Center Logo" />
+      <h2>Scan your Member ID card to check in</h2>
       <input
         type="text"
         autofocus
@@ -28,7 +24,7 @@
         maxlength="6"
         value=""
         hx-post="/scan-in"
-        hx-trigger="input delay:500ms"
+        hx-trigger="input[target.value.length == 6]"
         hx-target="#main-partial"
         hx-swap="outerHTML"
         autocomplete="off"

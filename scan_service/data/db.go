@@ -41,13 +41,25 @@ func DatabaseInit() {
 }
 
 func InsertMemberCheckin(member *Member) {
+	var err error
+	db, err = sql.Open("sqlite3", dbFile)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer func() {
+		if err := db.Close(); err != nil {
+			log.Panic("Database closure failed:", err)
+		}
+	}()
+
 	query := `
 	INSERT INTO visitors 
 	(member_id, first_name, membership_expiration, checkin_time) 
-	WITH VALUES (?, ?, ?, ?);
+	VALUES (?, ?, ?, ?);
 	`
 
-	_, err := db.Exec(
+	_, err = db.Exec(
 		query,
 		member.MemberID,
 		member.FirstName,
