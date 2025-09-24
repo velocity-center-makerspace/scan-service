@@ -1,13 +1,12 @@
-package scanservice
+package data
 
 import (
 	"fmt"
+	"github.com/gocarina/gocsv"
 	"log"
 	"os"
 	"strings"
 	"time"
-
-	"github.com/gocarina/gocsv"
 )
 
 type Member struct {

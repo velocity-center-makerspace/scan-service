@@ -1,4 +1,4 @@
-package scanservice
+package web
 
 import (
 	"context"

@@ -1,0 +1,13 @@
+<div
+  id="error-partial"
+  hx-get="/"
+  hx-swap="outerHTML"
+  hx-target="#main-partial"
+  hx-trigger="delay:10s"
+>
+  <img src="../static/assets/error.png" alt="Error :(" />
+  <h3>
+    Something went wrong. Please notify the Makerspace Coordinator of this issue
+  </h3>
+  <button hx-get="/" hx-target="#main-partial" hx-swap="outerHTML">Back</button>
+</div>

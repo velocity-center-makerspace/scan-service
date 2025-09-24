@@ -1,9 +1,10 @@
-package scanservice
+package data
 
 import (
 	"database/sql"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
+	"time"
 )
 
 var dbFile string = "../test.db"
@@ -37,4 +38,25 @@ func DatabaseInit() {
 	}
 
 	log.Println("Table 'visitors' created successfully!")
+}
+
+func InsertMemberCheckin(member *Member) {
+	query := `
+	INSERT INTO visitors 
+	(member_id, first_name, membership_expiration, checkin_time) 
+	WITH VALUES (?, ?, ?, ?);
+	`
+
+	_, err := db.Exec(
+		query,
+		member.MemberID,
+		member.FirstName,
+		member.MembershipExpiration,
+		time.Now(),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println("Member checked in successfully!")
 }
