@@ -6,7 +6,7 @@ import (
 	"door-greeter/scan_service/web"
 	"log"
 	"net/http"
-	//"os"
+	"os"
 	//"golang.org/x/oauth2/google"
 	//"google.golang.org/api/gmail/v1"
 	//"google.golang.org/api/option"
@@ -15,15 +15,21 @@ import (
 func main() {
 	data.DatabaseInit()
 
-	fileHandler := http.StripPrefix("/static/", http.FileServer(http.Dir("../static/")))
-	http.Handle("/static/*", fileHandler)
+	fileHandler := http.StripPrefix("/static/", http.FileServer(http.Dir("static/")))
+	http.Handle("/static/", fileHandler)
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "templates/index.html")
 	})
 
 	http.HandleFunc("GET /see-coordinator", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "templates/see-coordinator.html")
+		content, err := os.ReadFile("templates/see-coordinator.html")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		w.Write(content)
 	})
 
 	http.HandleFunc("GET /membership-expired", func(w http.ResponseWriter, r *http.Request) {

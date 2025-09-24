@@ -1,10 +1,12 @@
 <div
   id="success-partial"
   hx-get="/"
-  hx-target="outerHTML"
-  hx-trigger="delay:10s"
+  hx-target="#success-partial"
+  hx-swap="outerHTML"
+  hx-push-url="/"
+  hx-trigger="load delay:10s"
 >
   <img src="../static/assets/checkmark.png" alt="Yippee!" />
   <h3>Successfully Checked In! Thank you!</h3>
-  <button hx-get="/" hx-target="outerHTML">Back</button>
+  <button hx-get="/" hx-target="outerHTML" hx-push-url="/">Back</button>
 </div>

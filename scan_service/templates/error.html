@@ -2,12 +2,20 @@
   id="error-partial"
   hx-get="/"
   hx-swap="outerHTML"
-  hx-target="#main-partial"
-  hx-trigger="delay:10s"
+  hx-target="#error-partial"
+  hx-trigger="load delay:10s"
+  hx-push-url="/"
 >
   <img src="../static/assets/error.png" alt="Error :(" />
   <h3>
     Something went wrong. Please notify the Makerspace Coordinator of this issue
   </h3>
-  <button hx-get="/" hx-target="#main-partial" hx-swap="outerHTML">Back</button>
+  <button
+    hx-get="/"
+    hx-target="#error-partial"
+    hx-swap="outerHTML"
+    hx-push-url="/"
+  >
+    Back
+  </button>
 </div>

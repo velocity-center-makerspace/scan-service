@@ -3,11 +3,17 @@
   hx-get="/"
   hx-target="#see-coordinator-partial"
   hx-swap="outerHTML"
-  hx-trigger="delay:10s"
+  hx-push-url="/"
+  hx-trigger="load delay:10s"
 >
-  <img src="static/assets/warning.png" alt="Warning!" />
+  <img src="../static/assets/warning.png" alt="Warning!" />
   <h3>See the Makerspace Coordinator for further assistance</h3>
-  <button hx-get="/" hx-target="#see-coordinator-partial" hx-swap="outerHTML">
+  <button
+    hx-get="/"
+    hx-target="#see-coordinator-partial"
+    hx-swap="outerHTML"
+    hx-push-url="/"
+  >
     Back
   </button>
 </div>
