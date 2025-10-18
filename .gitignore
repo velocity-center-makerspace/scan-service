@@ -1,0 +1,12 @@
+# Environment variables
+.env
+
+# Secret Data
+*.csv
+*.db
+*.json
+
+# Go data
+go.mod
+go.sum
+htmx.min.js

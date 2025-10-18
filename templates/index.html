@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Makerspace Member Check In</title>
+    <!--<script type="text/javascript" src="static/htmx.min.js"></script>-->
+    <script
+      src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js"
+      integrity="sha384-ZBXiYtYQ6hJ2Y0ZNoYuI+Nq5MqWBr+chMrS/RkXpNzQCApHEhOt2aY8EJgqwHLkJ"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div id="main-partial">
+      <h1>Makerspace Member Check In</h1>
+      <img src="static/assets/vc-dark-bg.png" alt="Velocity Center Logo" />
+      <h2>Scan your Member ID card to check in</h2>
+      <input
+        type="text"
+        autofocus
+        name="member-id"
+        id="member-id"
+        maxlength="6"
+        value=""
+        hx-post="/scan-in"
+        hx-trigger="input[target.value.length == 6]"
+        hx-target="#main-partial"
+        hx-swap="outerHTML"
+        autocomplete="off"
+      />
+      <br />
+      <a
+        href="/see-coordinator"
+        hx-boost="true"
+        hx-target="#main-partial"
+        hx-swap="outerHTML"
+        hx-push-url="/see-coordinator"
+      >
+        I don't have a Member ID card/I'm not a member
+      </a>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+<div
+  id="invalid-member-id-partial"
+  hx-get="/"
+  hx-swap="outerHTML"
+  hx-target="#invalid-member-id-partial"
+  hx-push-url="/"
+  hx-trigger="load delay:10s"
+>
+  <img src="../static/assets/error.png" alt="Invalid Member ID!" />
+  <h1>The Member ID entered is invalid. Please try again.</h1>
+  <button
+    hx-get="/"
+    hx-target="#invalid-member-id-partial"
+    hx-swap="outerHTML"
+    hx-push-url="/"
+  >
+    Back
+  </button>
+</div>
