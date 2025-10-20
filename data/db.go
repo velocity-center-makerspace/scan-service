@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-var dbFile string = "../test.db"
+var dbFile string = "test.db"
 var db *sql.DB
 
 func DatabaseInit() {
@@ -29,7 +29,9 @@ func DatabaseInit() {
 		first_name TEXT NOT NULL,
 		membership_expiration DATE NOT NULL,
 		checkin_time DATETIME NOT NULL
-	);
+
+	)
+	;
 	`
 
 	_, err = db.Exec(createTable)
@@ -40,7 +42,7 @@ func DatabaseInit() {
 	log.Println("Table 'visitors' created successfully!")
 }
 
-func InsertMemberCheckin(member *Member) {
+func InsertMemberCheckin(member *Member, checkinTime time.Time) {
 	var err error
 	db, err = sql.Open("sqlite3", dbFile)
 	if err != nil {
@@ -64,7 +66,7 @@ func InsertMemberCheckin(member *Member) {
 		member.MemberID,
 		member.FirstName,
 		member.MembershipExpiration,
-		time.Now(),
+		checkinTime,
 	)
 	if err != nil {
 		log.Fatal(err)

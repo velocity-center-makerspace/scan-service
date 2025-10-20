@@ -1,18 +1,17 @@
 <div id="membership-expired-partial">
   <img src="../static/assets/warning.png" alt="Warning!" />
   <h1>Your membership has expired!</h1>
-  <button
+  <a
     href="https://secure.touchnet.net/C20376_ustores/web/store_cat.jsp?STOREID=5&CATID=17&SINGLESTORE=true"
     target="_blank"
     rel="noopener"
   >
     Renew Now
-  </button>
+  </a>
   <button
     hx-get="/"
     hx-swap="outerHTML"
     hx-target="#membership-expired-partial"
-    hx-push-url="/"
   >
     Back
   </button>
