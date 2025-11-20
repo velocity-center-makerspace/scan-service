@@ -13,27 +13,47 @@ func ScanInHandler(w http.ResponseWriter, r *http.Request) {
 	member_id := r.FormValue("member-id")
 
 	// check csv file for membership
-	members := data.GetMembers()
-	for _, member := range members {
-		if member.MemberID != member_id {
+	paidMembers := data.GetPaidMembers()
+	for _, paidMember := range paidMembers {
+		if paidMember.MemberID != member_id {
 			continue
 		}
-		if isActiveMember(member.MembershipExpiration) {
+		if isActivePaidMember(paidMember.MembershipExpiration) {
 			checkinTime := time.Now()
-			data.InsertMemberCheckin(member, checkinTime)
+			data.InsertPaidMemberCheckin(paidMember, checkinTime)
+			http.Redirect(w, r, "/success", http.StatusSeeOther)
 			return
 		} else {
 			log.Println("Membership expired :(")
 			checkinTime := time.Now()
-			data.InsertMemberCheckin(member, checkinTime)
+			data.InsertPaidMemberCheckin(paidMember, checkinTime)
 			http.Redirect(w, r, "/membership-expired", http.StatusSeeOther)
 			return
 		}
 	}
+
+	unpaidMembers := data.GetUnpaidMembers()
+	for _, unpaidMember := range unpaidMembers {
+		if unpaidMember.MemberID != member_id {
+			continue
+		}
+		if unpaidMember.MembershipActive {
+			checkinTime := time.Now()
+			data.InsertUnpaidMemberCheckin(unpaidMember, checkinTime)
+			http.Redirect(w, r, "/success", http.StatusSeeOther)
+			return
+		} else {
+			log.Println("Membership no longer active :(")
+			checkinTime := time.Now()
+			data.InsertUnpaidMemberCheckin(unpaidMember, checkinTime)
+			http.Redirect(w, r, "/membership-inactive", http.StatusSeeOther)
+		}
+	}
+
 	log.Println("Invalid member ID.")
 	http.Redirect(w, r, "/invalid-member-id", http.StatusSeeOther)
 }
 
-func isActiveMember(expirationDate time.Time) bool {
+func isActivePaidMember(expirationDate time.Time) bool {
 	return expirationDate.After(time.Now())
 }

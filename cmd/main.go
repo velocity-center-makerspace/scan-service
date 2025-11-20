@@ -29,6 +29,11 @@ func main() {
 		tmpl.Execute(w, nil)
 	})
 
+	http.HandleFunc("GET /member-inactive", func(w http.ResponseWriter, r *http.Request) {
+		tmpl := template.Must(template.ParseFiles("templates/member-inactive.html"))
+		tmpl.Execute(w, nil)
+	})
+
 	http.HandleFunc("GET /invalid-member-id", func(w http.ResponseWriter, r *http.Request) {
 		tmpl := template.Must(template.ParseFiles("templates/invalid-member-id.html"))
 		tmpl.Execute(w, nil)

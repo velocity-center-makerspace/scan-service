@@ -1,7 +1,9 @@
 package data
 
 import (
+	"bytes"
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"strings"
@@ -10,29 +12,45 @@ import (
 	"github.com/gocarina/gocsv"
 )
 
-type Member struct {
+var paidMemberCsv string = "tbl_members_paid.csv"
+var unpaidMemberCsv string = "tbl_members_unpaid.csv"
+
+type PaidMember struct {
 	MemberID                string    `csv:"MemberID"`
 	FirstName               string    `csv:"FirstName"`
 	MembershipExpirationStr string    `csv:"MembershipExpirationDate"`
 	MembershipExpiration    time.Time `csv:"-"` // calculated field
 }
 
-var csvFileName string = "tbl_members.csv"
+type UnpaidMember struct {
+	MemberID         string `csv:"MemberID"`
+	FirstName        string `csv:"FirstName"`
+	MembershipActive bool   `csv:"MembershipActive"`
+}
 
-func GetMembers() []*Member {
+func removeQuotes(filename string) (io.Reader, error) {
 	var err error
-	csvFile, err := os.Open(csvFileName)
+
+	data, err := os.ReadFile(filename)
+	if err != nil {
+		return nil, err
+	}
+
+	cleanData := bytes.ReplaceAll(data, []byte(`"`), []byte(""))
+
+	return bytes.NewReader(cleanData), nil
+}
+
+func GetPaidMembers() []*PaidMember {
+	var err error
+
+	csvReader, err := removeQuotes(paidMemberCsv)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer func() {
-		if err = csvFile.Close(); err != nil {
-			log.Fatal(err)
-		}
-	}()
 
-	members := []*Member{}
-	if err = gocsv.UnmarshalFile(csvFile, &members); err != nil {
+	members := []*PaidMember{}
+	if err = gocsv.Unmarshal(csvReader, &members); err != nil {
 		log.Fatal(err)
 	}
 
@@ -44,16 +62,33 @@ func GetMembers() []*Member {
 	return members
 }
 
-func timeConversion(expirationStr string, member *Member) {
+func timeConversion(expirationStr string, member *PaidMember) {
 	var err error
 	dateList := strings.Split(expirationStr, "/")
 	month := fmt.Sprintf("%02s", dateList[0])
 	day := fmt.Sprintf("%02s", dateList[1])
 	year := dateList[2]
 
-	formattedDate := fmt.Sprintf("20%s-%s-%s", year, month, day)
+	formattedDate := fmt.Sprintf("%s-%s-%s", year, month, day)
 	member.MembershipExpiration, err = time.Parse(time.DateOnly, formattedDate)
 	if err != nil {
 		log.Fatalf("Error parsing member expiration: %v", err)
 	}
+}
+
+func GetUnpaidMembers() []*UnpaidMember {
+	var err error
+
+	csvReader, err := removeQuotes(unpaidMemberCsv)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	members := []*UnpaidMember{}
+	if err = gocsv.Unmarshal(csvReader, &members); err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println(gocsv.MarshalString(members))
+	return members
 }
