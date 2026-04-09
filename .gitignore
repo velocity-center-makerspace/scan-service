@@ -7,6 +7,4 @@
 *.json
 
 # Go data
-go.mod
-go.sum
 htmx.min.js

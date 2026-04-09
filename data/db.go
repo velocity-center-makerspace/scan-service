@@ -29,8 +29,7 @@ func DatabaseInit() {
 		first_name TEXT NOT NULL,
 		membership_expiration DATE NOT NULL,
 		checkin_time DATETIME NOT NULL
-	)
-	;
+	);
 	`
 
 	createUnpaidVisitors := `
@@ -40,7 +39,7 @@ func DatabaseInit() {
 		first_name TEXT NOT NULL,
 		membership_active INTEGER NOT NULL,
 		checkin_time DATETIME NOT NULL
-	)
+	);
 	`
 
 	_, err = db.Exec(createPaidVisitors)
