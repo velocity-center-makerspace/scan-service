@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-var dbFile string = "test.db"
+var dbFile string = "../test.db"
 var db *sql.DB
 
 func DatabaseInit() {
