@@ -5,6 +5,3 @@
 *.csv
 *.db
 *.json
-
-# Go data
-htmx.min.js
