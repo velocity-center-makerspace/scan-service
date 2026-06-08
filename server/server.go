@@ -34,7 +34,7 @@ func NewServer(handler http.Handler) *http.Server {
 func StartServer(ctx context.Context, server *http.Server) error {
 	errChan := make(chan error, 1)
 	go func() {
-		log.Println("Starting server...")
+		log.Printf("Starting server at http://localhost%s...", server.Addr)
 		if err := server.ListenAndServe(); !errors.Is(
 			err, http.ErrServerClosed,
 		) {

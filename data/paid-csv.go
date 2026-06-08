@@ -32,6 +32,5 @@ func GetPaidMembers() []*PaidMember {
 		timeConversion(member.MembershipExpirationStr, member)
 	}
 
-	log.Println(gocsv.MarshalString(members))
 	return members
 }

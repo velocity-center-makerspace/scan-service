@@ -26,6 +26,5 @@ func GetUnpaidMembers() []*UnpaidMember {
 		log.Fatal(err)
 	}
 
-	log.Println(gocsv.MarshalString(members))
 	return members
 }
